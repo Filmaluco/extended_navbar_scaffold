@@ -307,25 +307,13 @@ class _ExtendedNavigationBarScaffoldState
       }
     }
     return Scaffold(
-      appBar: widget.floatingAppBar ? null : widget.appBar,
       // backgroundColor: ,
       extendBody: true,
 
       body: Stack(
         children: <Widget>[
           widget.body,
-          // widget.appBar
-          widget.floatingAppBar
-              ? Positioned(
-                  top: 0,
-                  left: 10,
-                  right: 10,
-                  child: SafeArea(
-                    // height: 50,
-                    child: widget.appBar,
-                  ),
-                )
-              : Container(),
+         Container(),
           _CustomBottomNavigationBar(
             moreButtons: widget.moreButtons,
             searchWidget: widget.searchWidget,
@@ -436,36 +424,39 @@ class _CustomBottomNavigationBar extends StatelessWidget {
       left: 10,
       right: 10,
       // alignment: Alignment.bottomCenter,
-      child: Card(
-        // color: Colors.transparent,
-        color: Colors.transparent,
-        elevation: elevation ?? 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+      child: Hero(
+        tag: "navBar",
+        child: Card(
+          // color: Colors.transparent,
+          color: Colors.transparent,
+          elevation: elevation ?? 10,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
           ),
-        ),
-        child: SizedBox(
-          height: bottomBarOriginalHeight +
-              //* Increase height when parallex card is expanded *//
-              (bottomBarExpandedHeight - bottomBarOriginalHeight) *
-                  currentBottomBarParallexPercentage +
-              //* Increase height when More Button is expanded *//
-              (bottomBarExpandedHeight) * currentBottomBarMorePercentage +
-              //* Increase Height For Search Bar */
-              (bottomBarExpandedHeight) * currentBottomBarSearchPercentage,
-          child: Stack(
-            children: <Widget>[
-              _buildBackgroundForParallexCard(context),
-              _builtSearchBar(),
-              _buildOtherButtons(context),
+          child: SizedBox(
+            height: bottomBarOriginalHeight +
+                //* Increase height when parallex card is expanded *//
+                (bottomBarExpandedHeight - bottomBarOriginalHeight) *
+                    currentBottomBarParallexPercentage +
+                //* Increase height when More Button is expanded *//
+                (bottomBarExpandedHeight) * currentBottomBarMorePercentage +
+                //* Increase Height For Search Bar */
+                (bottomBarExpandedHeight) * currentBottomBarSearchPercentage,
+            child: Stack(
+              children: <Widget>[
+                _buildBackgroundForParallexCard(context),
+                _builtSearchBar(),
+                _buildOtherButtons(context),
 
-              _buildParallexCards(context),
-              // : Container(),
-              _buildMoreExpandedCard(context),
-              _buildCenterButton(context),
-            ],
+                _buildParallexCards(context),
+                // : Container(),
+                _buildMoreExpandedCard(context),
+                _buildCenterButton(context),
+              ],
+            ),
           ),
         ),
       ),
@@ -616,7 +607,7 @@ class _CustomBottomNavigationBar extends StatelessWidget {
           child: FloatingActionButton(
             backgroundColor: navBarColor,
             elevation: 0,
-            heroTag: 'sdansiux',
+            heroTag: null,
             // padding: EdgeInsets.only(left: 35),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -669,7 +660,7 @@ class _CustomBottomNavigationBar extends StatelessWidget {
               },
               child: FloatingActionButton(
                 backgroundColor: navBarColor,
-                heroTag: 'dsc',
+                heroTag: null,
                 // padding: EdgeInsets.only(right: 35),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
@@ -776,7 +767,7 @@ class _CustomBottomNavigationBar extends StatelessWidget {
                   },
                   child: FloatingActionButton(
                     backgroundColor: Colors.black,
-                    heroTag: 'adaojd',
+                    heroTag: null,
                     elevation: 0,
                     onPressed: null,
                     child: Icon(
