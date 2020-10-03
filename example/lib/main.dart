@@ -28,6 +28,7 @@ class _ExtendedNavBarState extends State<ExtendedNavBar> {
   @override
   Widget build(BuildContext context) {
     return GatheringScaffold(
+      snapedNavBar: true,
       body: Center(
         child: Container(
           color: Colors.blueGrey,

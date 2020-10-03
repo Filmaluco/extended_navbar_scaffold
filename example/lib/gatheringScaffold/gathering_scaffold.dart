@@ -2,10 +2,33 @@ import 'package:example/gatheringScaffold/navbar/gatheringNavbar.dart';
 import 'package:flutter/material.dart';
 
 class GatheringScaffold extends StatefulWidget {
+  //Widgets
   final PreferredSize appBar;
   final Widget body;
 
-  const GatheringScaffold({Key key, this.appBar, this.body}) : super(key: key);
+  //Style
+  final bool snapedNavBar;
+  final Color navBarColor;
+  final Color iconsColor;
+  final IconData actionButtonIcon;
+  final Image actionButtonImage;
+
+  //Action Widgets
+  //TODO: array of actions
+
+  //Gathering Widgets
+  //TODO: array of gatherings
+
+  const GatheringScaffold(
+      {Key key,
+      this.appBar,
+      this.body,
+      this.snapedNavBar = false,
+      this.navBarColor = Colors.white,
+      this.iconsColor = Colors.black,
+      this.actionButtonIcon = Icons.edit,
+      this.actionButtonImage})
+      : super(key: key);
 
   @override
   _GatheringScaffoldState createState() => _GatheringScaffoldState();
@@ -23,9 +46,10 @@ class _GatheringScaffoldState extends State<GatheringScaffold> {
     return Scaffold(
       appBar: widget.appBar,
       body: Stack(children: <Widget>[
-        widget.body,
+        widget.body ?? Container(),
         Container(),
-        GatheringNavbar(),
+        GatheringNavbar(widget.snapedNavBar, widget.navBarColor, widget.iconsColor,
+            widget.actionButtonIcon, widget.actionButtonImage),
       ]),
     );
   }
@@ -33,9 +57,10 @@ class _GatheringScaffoldState extends State<GatheringScaffold> {
   Widget _buildWithoutAppBar(BuildContext context) {
     return Scaffold(
       body: Stack(children: <Widget>[
-        widget.body,
+        widget.body ?? Container(),
         Container(),
-        GatheringNavbar(),
+        GatheringNavbar(widget.snapedNavBar, widget.navBarColor, widget.iconsColor,
+            widget.actionButtonIcon, widget.actionButtonImage),
       ]),
     );
   }

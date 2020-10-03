@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
 
 double bottomBarVisibleHeight = 55.0;
-double bottomBarOriginalHeight = 80.0;
-double bottomBarExpandedHeight = 300.0;
+double iconOverflowDistance = 20.0;
 
 class GatheringNavbar extends StatefulWidget {
+
+  //Style
+  final Color navBarColor;
+  final Color iconsColor;
+  final IconData actionButtonIcon;
+  final Image actionButtonImage;
+  final bool snaped;
+
+  const GatheringNavbar(this.snaped, this.navBarColor, this.iconsColor, this.actionButtonIcon, this.actionButtonImage, {Key key, }) : super(key: key);
+
+  //Action Widgets
+  //TODO: array of actions
+
+  //Gathering Widgets
+  //TODO: array of gatherings
+
   @override
   _GatheringNavbarState createState() => _GatheringNavbarState();
 }
@@ -13,9 +28,9 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        bottom: 10,
-        left: 10,
-        right: 10,
+        bottom: widget.snaped ? 0 : 10,
+        left: widget.snaped ? 0 : 10,
+        right: widget.snaped ? 0 : 10,
         child: Hero(
           tag: "navBar",
           child: Container(
@@ -32,16 +47,17 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
               ],
             ),
             child: Card(
+              //TODO: only do card if not snapped, if snaped this is a container
               color: Colors.transparent,
               elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+                  bottomLeft: widget.snaped ? Radius.circular(0) : Radius.circular(20),
+                  bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
                 ),
               ),
               child: SizedBox(
-                height: bottomBarVisibleHeight + 25,
+                height: bottomBarVisibleHeight + iconOverflowDistance,
                 child: Stack(
                   children: <Widget>[
                     _buildNavbarButtons(context),
@@ -62,10 +78,10 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
         padding: EdgeInsets.only(left: 0, right: 0),
         height: bottomBarVisibleHeight,
         decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor,
+          color: widget.navBarColor,
           borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
+            bottomLeft: widget.snaped ? Radius.circular(0) : Radius.circular(20),
+            bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
           ),
         ),
         child: Row(
@@ -88,7 +104,7 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
           // padding: EdgeInsets.only(left: 35),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(20),
+              bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
             ),
           ),
           child: Column(
@@ -98,13 +114,13 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
               Icon(
                 Icons.group_work,
                 size: 30,
-                color: Colors.black87,
+                color: widget.iconsColor,
               ),
               Text(
                 'Gatherings',
                 style: TextStyle(
                   fontSize: 13,
-                  color: Colors.black87,
+                  color: widget.iconsColor,
                 ),
               )
             ],
@@ -125,7 +141,7 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
           // padding: EdgeInsets.only(left: 35),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomRight: Radius.circular(20),
+              bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
             ),
           ),
           child: Column(
@@ -135,13 +151,13 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
               Icon(
                 Icons.settings,
                 size: 30,
-                color: Colors.black87,
+                color: widget.iconsColor,
               ),
               Text(
                 'Settings',
                 style: TextStyle(
                   fontSize: 13,
-                  color: Colors.black87,
+                  color: widget.iconsColor,
                 ),
               )
             ],
@@ -155,7 +171,7 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 20,
+      bottom: iconOverflowDistance,
       child: Center(
         child: Container(
           height: 60,
@@ -164,12 +180,12 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
                 width: 50,
                 child: FloatingActionButton(
                   heroTag: null,
-                  backgroundColor: Colors.black,
+                  backgroundColor: widget.iconsColor,
                   elevation: 0,
                   onPressed: null,
                   child: Icon(
-                    Icons.notifications,
-                    color: Theme.of(context).canvasColor,
+                    widget.actionButtonIcon,
+                    color: widget.navBarColor,
                   ),
                 ),
               ),
