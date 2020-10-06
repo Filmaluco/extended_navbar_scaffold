@@ -4,7 +4,6 @@ double bottomBarVisibleHeight = 55.0;
 double iconOverflowDistance = 20.0;
 
 class GatheringNavbar extends StatefulWidget {
-
   //Style
   final Color navBarColor;
   final Color iconsColor;
@@ -12,7 +11,14 @@ class GatheringNavbar extends StatefulWidget {
   final Image actionButtonImage;
   final bool snaped;
 
-  const GatheringNavbar(this.snaped, this.navBarColor, this.iconsColor, this.actionButtonIcon, this.actionButtonImage, {Key key, }) : super(key: key);
+  const GatheringNavbar(
+    this.snaped,
+    this.navBarColor,
+    this.iconsColor,
+    this.actionButtonIcon,
+    this.actionButtonImage, {
+    Key key,
+  }) : super(key: key);
 
   //Action Widgets
   //TODO: array of actions
@@ -28,50 +34,64 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-        bottom: widget.snaped ? 0 : 10,
-        left: widget.snaped ? 0 : 10,
-        right: widget.snaped ? 0 : 10,
-        child: Hero(
-          tag: "navBar",
-          child: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  blurRadius: 10.0, // soften the shadow
-                  offset: Offset(
-                    0, // Move to right 10  horizontally
-                    35, // Move to bottom 10 Vertically
-                  ),
-                )
-              ],
-            ),
-            child: Card(
-              //TODO: only do card if not snapped, if snaped this is a container
-              color: Colors.transparent,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: widget.snaped ? Radius.circular(0) : Radius.circular(20),
-                  bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
+      bottom: widget.snaped ? 0 : 10,
+      left: widget.snaped ? 0 : 10,
+      right: widget.snaped ? 0 : 10,
+      child: Hero(
+        tag: "navBar",
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                blurRadius: 10.0, // soften the shadow
+                offset: Offset(
+                  0, // Move to right 10  horizontally
+                  35, // Move to bottom 10 Vertically
                 ),
-              ),
-              child: SizedBox(
-                height: bottomBarVisibleHeight + iconOverflowDistance,
-                child: Stack(
-                  children: <Widget>[
-                    _buildNavbarButtons(context),
-                    _buildActionButton(context),
-                  ],
-                ),
-              ),
-            ),
+              )
+            ],
           ),
+          child: widget.snaped
+              ? _buildContainerNavbar(child: _buildNavbarStack())
+              : _buildCardNavbar(child: _buildNavbarStack()),
         ),
+      ),
     );
   }
 
-  Widget _buildNavbarButtons(BuildContext context) {
+  Widget _buildCardNavbar({Widget child}) {
+    return Card(
+        color: Colors.transparent,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft:
+                widget.snaped ? Radius.circular(0) : Radius.circular(20),
+            bottomRight:
+                widget.snaped ? Radius.circular(0) : Radius.circular(20),
+          ),
+        ),
+        child: child);
+  }
+
+  Widget _buildContainerNavbar({Widget child}) {
+    return Container(color: Colors.transparent, child: child);
+  }
+
+  Widget _buildNavbarStack() {
+    return SizedBox(
+      height: bottomBarVisibleHeight + iconOverflowDistance,
+      child: Stack(
+        children: <Widget>[
+          _buildNavbarButtons(),
+          _buildActionButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavbarButtons() {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
@@ -80,8 +100,10 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
         decoration: BoxDecoration(
           color: widget.navBarColor,
           borderRadius: BorderRadius.only(
-            bottomLeft: widget.snaped ? Radius.circular(0) : Radius.circular(20),
-            bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
+            bottomLeft:
+                widget.snaped ? Radius.circular(0) : Radius.circular(20),
+            bottomRight:
+                widget.snaped ? Radius.circular(0) : Radius.circular(20),
           ),
         ),
         child: Row(
@@ -104,7 +126,8 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
           // padding: EdgeInsets.only(left: 35),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
+              bottomRight:
+                  widget.snaped ? Radius.circular(0) : Radius.circular(20),
             ),
           ),
           child: Column(
@@ -141,7 +164,8 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
           // padding: EdgeInsets.only(left: 35),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomRight: widget.snaped ? Radius.circular(0) : Radius.circular(20),
+              bottomRight:
+                  widget.snaped ? Radius.circular(0) : Radius.circular(20),
             ),
           ),
           child: Column(
@@ -167,7 +191,7 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
     );
   }
 
-  Widget _buildActionButton(BuildContext context) {
+  Widget _buildActionButton() {
     return Positioned(
       left: 0,
       right: 0,
@@ -176,19 +200,19 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
         child: Container(
           height: 60,
           child: SizedBox(
-                height: 50,
-                width: 50,
-                child: FloatingActionButton(
-                  heroTag: null,
-                  backgroundColor: widget.iconsColor,
-                  elevation: 0,
-                  onPressed: null,
-                  child: Icon(
-                    widget.actionButtonIcon,
-                    color: widget.navBarColor,
-                  ),
-                ),
+            height: 50,
+            width: 50,
+            child: FloatingActionButton(
+              heroTag: null,
+              backgroundColor: widget.iconsColor,
+              elevation: 0,
+              onPressed: null,
+              child: Icon(
+                widget.actionButtonIcon,
+                color: widget.navBarColor,
               ),
+            ),
+          ),
         ),
       ),
     );

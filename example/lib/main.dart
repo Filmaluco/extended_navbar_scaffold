@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:example/example.dart';
 import 'package:example/gatheringScaffold/gathering_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,7 @@ class _ExtendedNavBarState extends State<ExtendedNavBar> {
   @override
   Widget build(BuildContext context) {
     return GatheringScaffold(
-      snapedNavBar: true,
+      snapedNavBar: Platform.isAndroid,
       body: Center(
         child: Container(
           color: Colors.blueGrey,
