@@ -31,6 +31,7 @@ class _ExtendedNavBarState extends State<ExtendedNavBar> {
   Widget build(BuildContext context) {
     return GatheringScaffold(
       snapedNavBar: Platform.isAndroid,
+      actionButtonIcon: Icons.add,
       body: Center(
         child: Container(
           color: Colors.blueGrey,

@@ -1,6 +1,9 @@
 import 'package:example/gatheringScaffold/navbar/gatheringNavbar.dart';
 import 'package:flutter/material.dart';
 
+import 'navbar/gatheringAction.dart';
+import 'navbar/gatheringGroup.dart';
+
 class GatheringScaffold extends StatefulWidget {
   //Widgets
   final PreferredSize appBar;
@@ -14,10 +17,10 @@ class GatheringScaffold extends StatefulWidget {
   final Image actionButtonImage;
 
   //Action Widgets
-  //TODO: array of actions
+  final List<GatheringAction> actions;
 
   //Gathering Widgets
-  //TODO: array of gatherings
+  final List<GatheringGroup> gatherings;
 
   const GatheringScaffold(
       {Key key,
@@ -27,7 +30,9 @@ class GatheringScaffold extends StatefulWidget {
       this.navBarColor = Colors.white,
       this.iconsColor = Colors.black,
       this.actionButtonIcon = Icons.edit,
-      this.actionButtonImage})
+      this.actionButtonImage,
+      this.actions,
+      this.gatherings})
       : super(key: key);
 
   @override
@@ -48,8 +53,14 @@ class _GatheringScaffoldState extends State<GatheringScaffold> {
       body: Stack(children: <Widget>[
         widget.body ?? Container(),
         Container(),
-        GatheringNavbar(widget.snapedNavBar, widget.navBarColor, widget.iconsColor,
-            widget.actionButtonIcon, widget.actionButtonImage),
+        GatheringNavbar(
+            widget.snapedNavBar,
+            widget.navBarColor,
+            widget.iconsColor,
+            widget.actionButtonIcon,
+            widget.actionButtonImage,
+        actions: widget.actions,
+        gatherings: widget.gatherings,),
       ]),
     );
   }
@@ -59,8 +70,12 @@ class _GatheringScaffoldState extends State<GatheringScaffold> {
       body: Stack(children: <Widget>[
         widget.body ?? Container(),
         Container(),
-        GatheringNavbar(widget.snapedNavBar, widget.navBarColor, widget.iconsColor,
-            widget.actionButtonIcon, widget.actionButtonImage),
+        GatheringNavbar(
+            widget.snapedNavBar,
+            widget.navBarColor,
+            widget.iconsColor,
+            widget.actionButtonIcon,
+            widget.actionButtonImage),
       ]),
     );
   }

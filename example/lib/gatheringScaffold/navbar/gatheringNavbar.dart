@@ -1,7 +1,11 @@
+import 'package:example/gatheringScaffold/navbar/gatheringAction.dart';
+import 'package:example/gatheringScaffold/navbar/gatheringGroup.dart';
 import 'package:flutter/material.dart';
 
 double bottomBarVisibleHeight = 55.0;
 double iconOverflowDistance = 20.0;
+
+double bottomBarExpandedRowHeight = 90.0;
 
 class GatheringNavbar extends StatefulWidget {
   //Style
@@ -18,19 +22,25 @@ class GatheringNavbar extends StatefulWidget {
     this.actionButtonIcon,
     this.actionButtonImage, {
     Key key,
+    this.actions,
+    this.gatherings
   }) : super(key: key);
 
   //Action Widgets
-  //TODO: array of actions
+  final List<GatheringAction> actions;
 
   //Gathering Widgets
-  //TODO: array of gatherings
+   final List<GatheringGroup> gatherings;
 
   @override
   _GatheringNavbarState createState() => _GatheringNavbarState();
 }
 
 class _GatheringNavbarState extends State<GatheringNavbar> {
+  //State Control
+  var isAnimating = false;
+  var drawerIsOpen = false;
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -123,6 +133,9 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           heroTag: null,
+          onPressed: () {
+
+          },
           // padding: EdgeInsets.only(left: 35),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
@@ -217,4 +230,19 @@ class _GatheringNavbarState extends State<GatheringNavbar> {
       ),
     );
   }
+
+
+  // Animations
+  void animateGatheringDrawer({bool open = true}) {
+
+  }
+
+  void animateActionsDrawer({bool open = true}) {
+
+  }
+
+  void animateInputDrawer({bool open = true}) {
+
+  }
 }
+
